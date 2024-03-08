@@ -1,0 +1,5 @@
+.row{
+    display: grid;
+    grid-template-columns: 2fr 3fr 1fr 1fr;
+    border-bottom: 1px solid rgb(193, 187, 187);
+}

@@ -11,5 +11,11 @@
 main{
   flex-grow: 1;
 }
+.css-wjh20t-MuiPagination-ul{
+  justify-content: center;
+}
+.pagination{
+  margin: 20px;
+}
 
 
