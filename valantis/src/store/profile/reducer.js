@@ -1,7 +1,6 @@
 const initialState = {
     loading: false,
     listId:[],
-    listIdOfPage:[],
     listBrand:[],
     listGoods:[],
     page:1
@@ -19,7 +18,7 @@ export const loadReducer = (state=initialState,action)=>{
             return {
             ...state,
             listId:payload
-            }           
+            }                 
         case "LOAD_BRANDS":
             return {
             ...state,
@@ -31,16 +30,14 @@ export const loadReducer = (state=initialState,action)=>{
             page:payload
             }           
         case "LOAD_GOODS_OF_PAGE":
-            return {
+            if(payload.length!==0){
+                 return {
             ...state,
             listGoods:payload
-            }                  
-        case "LOAD_IDS_OF_PAGE":
-            return {
-            ...state,
-            listIdOfPage:payload
-            }                  
-           
+            } 
+            }else{
+                return{...state}
+            }
         default:
             return state
     }

@@ -10,7 +10,7 @@ export function TableList({getGoodsFromApi}) {
   let listId=useSelector(store=>store.listId)
   let goods = useSelector(store => store.listGoods)
 
-    useEffect(()=>{
+    useEffect(()=>{ 
     handlerGetter("get_items", {"ids":listId.slice((page-1)*50,page*50)},getGoodsFromApi)
      }, [page,listId])
 

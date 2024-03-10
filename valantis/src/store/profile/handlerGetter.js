@@ -1,7 +1,7 @@
 import md5 from "md5"
 import { getPasswordWithTimestamp } from "./getterTimeStamp"
 
-export const handlerGetter = async function(action,params,func){
+export const handlerGetter = async function(action,params,func,reloadItem =0){
     try {
       let response = await fetch('http://api.valantis.store:40000/',{
     method:'POST',
@@ -19,8 +19,12 @@ export const handlerGetter = async function(action,params,func){
           func(data)
         }else{
           console.log('Ошибка при получении данных',response)
+          reloadItem++
+          if (reloadItem<2){
+            setTimeout(() => handlerGetter(action, params, func, reloadItem), 1000)
+          }
         }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
 }
