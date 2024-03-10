@@ -19,11 +19,11 @@ function App() {
   const getterIdFromApi=useCallback((data)=>{
     let newList  = [...new Set(data.result)]
     dispatch({type:'LOAD_IDS',payload:newList})
-  },[])
+  },[dispatch])
 
 const getListBrands=useCallback((data)=>{
   dispatch({type:'LOAD_BRANDS',payload:[...new Set(data.result)]})
-  },[])
+  },[dispatch])
 
   const getGoodsFromApi=useCallback((data)=>{
     let normalItems =data.result.filter((item, index, self) => index === self.findIndex((e) => e.id === item.id))
