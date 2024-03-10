@@ -3,7 +3,7 @@ import { getPasswordWithTimestamp } from "./getterTimeStamp"
 
 export const handlerGetter = async function(action,params,func,reloadItem =0){
     try {
-      let response = await fetch('http://api.valantis.store:40000/',{
+      let response = await fetch('https://api.valantis.store:41000/',{
     method:'POST',
     headers:{
       'X-Auth':md5(getPasswordWithTimestamp()),

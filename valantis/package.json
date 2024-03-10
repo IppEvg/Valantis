@@ -32,7 +32,7 @@
     ]
   },
   "homepage": "https://IppEvg.github.io/Valantis",
-  "proxy": "https://api.valantis.store:40000/",
+  "proxy": "https://api.valantis.store:41000/",
   "browserslist": {
     "production": [
       ">0.2%",
