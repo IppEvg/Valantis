@@ -1,7 +1,7 @@
-import {  useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from 'react'
 
-import { handlerGetter } from "../store/profile/handlerGetter"
+import { handlerGetter } from "./handlerGetter"
 import { Box, Grid } from "@mui/material"
 import "./tableList-style.css"
 
@@ -16,9 +16,9 @@ export function TableList() {
     dispatch({type:'LOAD_GOODS_OF_PAGE',payload:normalItems})
   }
   
-    useEffect(()=>{ 
+  useEffect(()=>{ 
     handlerGetter("get_items", {"ids":listId.slice((page-1)*50,page*50)},getGoodsFromApi)
-     }, [listId])
+  }, [listId,page])
 
   return (
     <>

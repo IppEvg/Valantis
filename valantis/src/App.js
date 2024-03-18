@@ -4,7 +4,7 @@ import { useEffect} from 'react'
 import { FooterComp } from './components/footerComp'
 import { TableGoodsForm } from './components/tableGoodsForm'
 import {TableList} from './components/tableList'
-import { handlerGetter } from './store/profile/handlerGetter'
+import { handlerGetter } from './components/handlerGetter'
 import {Box, CircularProgress, Pagination} from '@mui/material'
 import './App.css'
 
@@ -25,9 +25,8 @@ function App() {
     dispatch({type:'LOAD_BRANDS',payload:[...new Set(data.result)]})
   }
 
-  const handleChange = (event, value) => {
-    dispatch({type:'CHANGE_PAGE',payload:value})
-    handlerGetter("get_ids",{"ids":listId.slice((page-1)*50,page*50)}, getterIdFromApi)
+  const handleChange = (e,target) => {
+    dispatch({type:'CHANGE_PAGE',payload:target})
   }
 
   useEffect(()=>{
@@ -44,7 +43,7 @@ function App() {
                 <CircularProgress />
               </Box>:
               <>
-                 <TableGoodsForm getterIdFromApi={getterIdFromApi}/>
+                <TableGoodsForm getterIdFromApi={getterIdFromApi}/>
                 <TableList/> 
               </>
         }
