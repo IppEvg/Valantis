@@ -11,20 +11,24 @@ export function TableGoodsForm({getterIdFromApi}){
   const dispatch= useDispatch()
   const[input,setInput]=useState('')
   const listBrand= useSelector(store=>store.listBrand)
-
+  let listId=useSelector(store=>store.listId)
+  let page = useSelector(store=>store.page)
+  
   const getFilter=(e)=>{
     e.preventDefault()
-    if(input.match(/\d+/i)){
-     handlerGetter("filter", {"price": +input}, getterIdFromApi)
-    }else if (listBrand.find(item=>item==input)){
-      handlerGetter("filter", {"brand": input}, getterIdFromApi)
-    }else if(input.match(/\D+/i)){
-      handlerGetter("filter", {"product": input}, getterIdFromApi)
+    if(input.match(/\s*\d+\s*/i)){
+    handlerGetter("filter", {"price": +input}, getterIdFromApi)
+    }else if (listBrand.find(item=>item===input)){
+    handlerGetter("filter", {"brand": input}, getterIdFromApi)
+    }else if(input.match(/\s*\D+\s*/i)){
+    handlerGetter("filter", {"product": input}, getterIdFromApi)
     }
     if(input===""){
-      handlerGetter("get_ids", {}, getterIdFromApi)
+    handlerGetter("get_ids", {}, getterIdFromApi)
     }
+    if (listId.length/50<page){
       dispatch({type:'CHANGE_PAGE',payload:1})
+    }
   }
   
     return(
@@ -33,7 +37,7 @@ export function TableGoodsForm({getterIdFromApi}){
         <form onSubmit={getFilter} className="filterForm" >
           <div className="filterForm_block" >
             <div>
-            <TextField id="standard-basic" label="Поиск" variant="standard" onChange={(e)=>setInput(e.target.value)} className="inputSearch"/>
+            <TextField id="standard-basic" label="Поиск" variant="standard" onChange={(e)=>setInput(e.target.value.trim())} className="inputSearch"/>
             </div>
             <div>
               <IconButton type="submit">

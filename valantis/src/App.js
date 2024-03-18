@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { useCallback, useEffect} from 'react'
+import { useEffect} from 'react'
 
 import { FooterComp } from './components/footerComp'
 import { TableGoodsForm } from './components/tableGoodsForm'
@@ -16,30 +16,23 @@ function App() {
   let loading=useSelector(store=>store.loading)
   let countPages =Math.ceil(listId.length / 50)
 
-  const getterIdFromApi=useCallback((data)=>{
+  const getterIdFromApi=(data)=>{
     let newList  = [...new Set(data.result)]
     dispatch({type:'LOAD_IDS',payload:newList})
-  },[dispatch])
+  }
 
-const getListBrands=useCallback((data)=>{
-  dispatch({type:'LOAD_BRANDS',payload:[...new Set(data.result)]})
-  },[dispatch])
+  const getListBrands=(data)=>{
+    dispatch({type:'LOAD_BRANDS',payload:[...new Set(data.result)]})
+  }
 
-  const getGoodsFromApi=useCallback((data)=>{
-    let normalItems =data.result.filter((item, index, self) => index === self.findIndex((e) => e.id === item.id))
-    dispatch({type:'LOAD_GOODS_OF_PAGE',payload:normalItems})
-    },[dispatch])
-   
-const handleChange = (event, value) => {
-      dispatch({type:'CHANGE_PAGE',payload:value})
-    }
+  const handleChange = (event, value) => {
+    dispatch({type:'CHANGE_PAGE',payload:value})
+    handlerGetter("get_ids",{"ids":listId.slice((page-1)*50,page*50)}, getterIdFromApi)
+  }
 
   useEffect(()=>{
-    const fetching = async function(){
-      await handlerGetter("get_ids", {}, getterIdFromApi)
-      await handlerGetter("get_fields", {"field": "brand"}, getListBrands)
-    }     
-    fetching()
+    handlerGetter("get_ids", {}, getterIdFromApi)
+    handlerGetter("get_fields", {"field": "brand"}, getListBrands)
   }, [])
   
   return (
@@ -52,7 +45,7 @@ const handleChange = (event, value) => {
               </Box>:
               <>
                  <TableGoodsForm getterIdFromApi={getterIdFromApi}/>
-                <TableList getGoodsFromApi={getGoodsFromApi}/> 
+                <TableList/> 
               </>
         }
           </main>
@@ -60,7 +53,7 @@ const handleChange = (event, value) => {
           <FooterComp/>
         </section>
       </div>
-  );
+  )
 }
 
 export default App
